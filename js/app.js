@@ -1,6 +1,5 @@
 (function (window) {
 	'use strict';
-
 	// Your starting point. Enjoy the ride!
 	const vm = new Vue({
 		el: '#app',
@@ -21,7 +20,9 @@
 					done: false
 				}
 			],
-			todoName: []
+			todoName: '',
+			editId: -1,
+			id: 3,
 		},
 		methods: {
 			// 删除
@@ -30,24 +31,33 @@
 			},
 			// 添加
 			add(e) {
+				if (this.todoName === '') {
+					return
+				}
 				if (e.keyCode === 13) {
-					console.log('添加任务', this.todoName);
+					// console.log('添加任务', this.todoName);
 					// todo: 添加任务
 
 					// 1. 获取任务的名称
-					const todoName = this.todoName;
+					let todoName = this.todoName;
 					// 2.拼成一个对象添加到数组里
 					this.list.push({
-						id: 4,
+						id: this.id++,
 						name: todoName,
 						done: false
 					});
 					// 3.用完了之后, 清空''
-					todoName = ''
-
+					this.todoName = ''
 				}
 			},
-
+			// 显示showEdit
+			showEdit(id) {
+				this.editId = id;
+			},
+			// 修改隐藏
+			update() {
+				this.editId = -1;
+			}
 		},
 	})
 })(window);
